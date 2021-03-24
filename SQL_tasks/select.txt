@@ -67,4 +67,37 @@ PC ON Product.model = PC.model
 AND PC.speed>=450
 
 10)
+SELECT model, price
+FROM Printer
+WHERE price = (SELECT MAX(price)
+FROM Printer)
+
+11)
+SELECT AVG(speed)
+FROM PC
+
+12)
+SELECT AVG(speed)
+FROM Laptop
+WHERE price > 1000
+
+13)
+SELECT AVG(speed)
+FROM PC INNER JOIN
+Product ON PC.model = Product.model
+AND maker = 'A'
+
+14)
+SELECT Ships.class, Ships.name, Classes.country
+FROM Ships INNER JOIN
+Classes ON Ships.class = Classes.class
+AND numGuns >= 10
+
+15)
+SELECT hd
+FROM PC
+GROUP BY hd
+HAVING COUNT(model) >= 2
+
+16)
 
