@@ -61,4 +61,10 @@ FROM Product
 WHERE type = 'Laptop')
 
 9)
+SELECT DISTINCT maker
+FROM Product INNER JOIN 
+PC ON Product.model = PC.model
+AND PC.speed>=450
+
+10)
 
