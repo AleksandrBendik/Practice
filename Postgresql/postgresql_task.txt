@@ -1,0 +1,75 @@
+ Создайте 5 таблиц, структуру продумайте сами. Одна таблица главная, что бы это ни значило, остальные таблицы имеют Отношения к главной, и + 1 отношение к любой неглавной таблице. 
+ Данные набивайте по своему усмотрению.
+
+ 
+ CREATE TABLE Main (
+    Id SERIAL PRIMARY KEY,
+    Order_date DATE,
+	Status VARCHAR(10) NOT NULL
+);
+
+INSERT INTO Main VALUES (1,'09/03/2021','Pending');
+INSERT INTO Main VALUES (2,'08/03/2021','Pending');
+INSERT INTO Main VALUES (3,'01/03/2021','Delivered');
+INSERT INTO Main VALUES (4,'27/02/2021','Delivered');
+
+
+CREATE TABLE Orders (
+    Id SERIAL PRIMARY KEY,
+    OrderId INT,
+    Order_class VARCHAR(20),
+    FOREIGN KEY (OrderId)  REFERENCES Main(Id)
+);
+
+INSERT INTO Orders VALUES (1,1,'Electronics');
+INSERT INTO Orders VALUES (2,2,'Electronics');
+INSERT INTO Orders VALUES (3,3,'Electronics');
+INSERT INTO Orders VALUES (4,4,'Electronics');
+
+CREATE TABLE Products (
+    Id SERIAL PRIMARY KEY,
+    ProductId INT,
+    Product_name VARCHAR(20));
+
+ALTER TABLE Products ADD FOREIGN KEY (ProductId)  REFERENCES Orders(Id),
+ADD FOREIGN KEY (ProductId)  REFERENCES Main(Id);
+
+INSERT INTO Products VALUES (1,1,'Headphones');
+INSERT INTO Products VALUES (2,2,'Charger');
+INSERT INTO Products VALUES (3,3,'Case');
+INSERT INTO Products VALUES (4,4,'Watch');
+
+CREATE TABLE Clients (
+    Id SERIAL PRIMARY KEY,
+    ClientId INT,
+    Client_name VARCHAR(20));
+
+ALTER TABLE Clients ADD FOREIGN KEY (ClientId)  REFERENCES Products(Id),
+ADD FOREIGN KEY (ClientId)  REFERENCES Main(Id);
+
+INSERT INTO Clients VALUES (1,1,'Vasya');
+INSERT INTO Clients VALUES (2,2,'Petya');
+INSERT INTO Clients VALUES (3,3,'Dima');
+INSERT INTO Clients VALUES (4,4,'Pavel');
+
+CREATE TABLE Client_data (
+    Id SERIAL PRIMARY KEY,
+    ClientId INT,
+    City VARCHAR(20),
+	Phone_number VARCHAR(14)
+	);
+
+ALTER TABLE Client_data ADD FOREIGN KEY (ClientId)  REFERENCES Clients(Id),
+ADD FOREIGN KEY (ClientId)  REFERENCES Main(Id);
+
+INSERT INTO Client_data VALUES (1,1,'375295475254');
+INSERT INTO Client_data VALUES (2,2,'375175758254');
+INSERT INTO Client_data VALUES (3,3,'375177857588');
+INSERT INTO Client_data VALUES (4,4,'375337857578');
+
+ALTER TABLE Orders ADD FOREIGN KEY (OrderId)  REFERENCES Client_data(Id);
+
+
+
+
+
