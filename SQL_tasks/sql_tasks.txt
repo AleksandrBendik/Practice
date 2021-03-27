@@ -95,3 +95,34 @@ FROM PC INNER JOIN
 Product ON PC.model = Product.model
 AND maker = 'A'
 
+14)Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
+
+SELECT hd
+FROM PC
+GROUP BY hd
+HAVING COUNT(model) >= 2
+
+15)Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара указывается только один раз, т.е. (i,j), но не (j,i), Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
+
+SELECT DISTINCT p1.model, p2.model, p1.speed, p1.ram
+FROM pc p1, pc p2
+WHERE p1.speed = p2.speed AND p1.ram = p2.ram AND p1.model > p2.model
+
+16)Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
+Вывести: type, model, speed
+
+SELECT DISTINCT Product.type,Product.model,Laptop.speed
+FROM Laptop
+JOIN Product ON Laptop.model=Product.model
+WHERE Laptop.speed<(SELECT min(speed)
+                      FROM PC)
+17)Найдите производителей самых дешевых цветных принтеров. Вывести: maker, price
+
+SELECT DISTINCT Product.maker, Printer.price
+FROM Product, Printer
+WHERE Product.model = Printer.model
+AND Printer.color = 'y'
+AND Printer.price = (SELECT MIN(price)
+FROM Printer
+WHERE Printer.color = 'y')
+
