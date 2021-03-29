@@ -169,5 +169,22 @@ WHERE speed>=750 AND maker IN
 FROM Product JOIN laptop ON Product.model=Laptop.model
 WHERE speed>=750 )
 
-23)
+23)Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний размер HD.
+
+SELECT Product.maker, AVG(PC.hd)
+FROM PC, Product
+WHERE Product.model = PC.model
+AND Product.maker IN (SELECT maker
+FROM Product
+WHERE Product.type = 'printer')
+GROUP BY maker
+
+24)Используя таблицу Product, определить количество производителей, выпускающих по одной модели.
+
+SELECT COUNT(maker)
+FROM Product
+WHERE maker IN
+(SELECT maker FROM Product
+GROUP BY maker
+HAVING COUNT(model) = 1)
 
