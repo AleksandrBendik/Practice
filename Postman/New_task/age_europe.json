@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "875a95b7-ebc1-4515-9ce2-fa1a40e52dcf",
+		"name": "equivalence classes and boundary values tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Age_Europe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let age = pm.request.body.formdata.get(\"age\");\r",
+							"\r",
+							"if (age >= 0 && age <= 17) {\r",
+							"    pm.test(\"Age_type eql underage \", function () {    \r",
+							"    pm.expect(pm.response.json().age_type).to.eql(\"underage\");\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"}\r",
+							"else if (age >= 18 && age <= 50) {\r",
+							"    pm.test(\"Age_type eql adult \", function () {\r",
+							"    pm.expect(pm.response.json().age_type).to.eql(\"adult\");\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"}\r",
+							"else if (age > 50 && age <= 100) {\r",
+							"    pm.test(\"Age_type eql antiquity \", function () {    \r",
+							"    pm.expect(pm.response.json().age_type).to.eql(\"antiquity\");\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"}\r",
+							"else if (age < 0 || age >= 101 ) {\r",
+							"    pm.test(\"Age out of the border \", function () {    \r",
+							"    pm.response.to.have.status(500);   \r",
+							"}); \r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{u}}age_europe",
+					"host": [
+						"{{u}}age_europe"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

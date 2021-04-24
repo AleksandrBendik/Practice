@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "240f9f23-1610-4d1c-b485-629af8b3d724",
+		"name": "age_usa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "age_usa",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let age = pm.request.body.formdata.get(\"age\");\r",
+							"if ( age >= 0 && age <= 20 ){\r",
+							"    pm.test(\"Age is eql underage\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.age_type).to.eql(\"underage\");\r",
+							"    });\r",
+							"} else if (age >= 21 && age <= 50 ){\r",
+							"    pm.test(\"Age is eql adult\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.age_type).to.eql(\"adult\");\r",
+							"    });\r",
+							"} else if (age >= 51 && age <= 100 ){\r",
+							"    pm.test(\"Age is eql antiquity\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"        var jsonData = pm.response.json();\r",
+							"        pm.expect(jsonData.age_type).to.eql(\"antiquity\");\r",
+							"    });\r",
+							"} else if (age < 0 || age >= 101) {\r",
+							"     pm.test(\"Age out of the border\", function () {\r",
+							"        pm.response.to.have.status(500);\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{u}}age_usa",
+					"host": [
+						"{{u}}age_usa"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
